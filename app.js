@@ -10,6 +10,10 @@ const usersRouter = require("./routes/users");
 
 const app = express();
 
+// Cors
+const cors = require("cors");
+app.use(cors());
+
 // Set up mongoose connection
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
