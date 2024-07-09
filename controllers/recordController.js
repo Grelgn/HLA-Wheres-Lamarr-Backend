@@ -5,6 +5,11 @@ exports.getAllRecords = async (req, res) => {
 	res.json(records);
 };
 
+exports.getRecord = async (req, res) => {
+	const record = await Record.findById(req.params.Id);
+	res.json(record);
+};
+
 exports.startTime = async (req, res) => {
 	const record = new Record({
 		timeStart: req.body.timeStart,

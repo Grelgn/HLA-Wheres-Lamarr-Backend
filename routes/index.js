@@ -16,6 +16,7 @@ router.get("/levels", levelController.getAllLevels);
 
 // Record
 router.get("/records", recordController.getAllRecords);
+router.get("/record/:Id", recordController.getRecord);
 router.post("/record", recordController.startTime);
 router.patch("/record/:Id", recordController.updateRecord);
 
