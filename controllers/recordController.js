@@ -17,24 +17,20 @@ exports.startTime = async (req, res) => {
 	});
 };
 
-// exports.endTime = async (req, res) => {
-// 	await Record.findByIdAndUpdate(req.params.Id, {
-// 		timeEnd: Date.now,
-// 	});
-// };
-
-// exports.submitRecord = async (req, res) => {
-// 	if (req.body.name && req.body.time) {
-// 		const record = new Record({
-// 			name: req.body.name,
-// 			time: req.body.time,
-// 		});
-// 		await record.save();
-
-// 		res.json({
-// 			message: `The record has been saved`,
-// 		});
-// 	} else {
-// 		res.sendStatus(406);
-// 	}
-// };
+exports.updateRecord = async (req, res) => {
+	if (req.body.name) {
+		await Record.findByIdAndUpdate(req.params.Id, {
+			name: req.body.name,
+		});
+		res.json({
+			message: `Added name to Record ID: ${req.params.Id}`,
+		});
+	} else {
+		await Record.findByIdAndUpdate(req.params.Id, {
+			timeEnd: Date.now(),
+		});
+		res.json({
+			message: `Added timeEnd to Record ID: ${req.params.Id}`,
+		});
+	}
+};

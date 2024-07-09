@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 const RecordSchema = new Schema({
 	name: { type: String },
 	timeStart: { type: Date, default: Date.now },
-	timeEnd: { type: Date },
+	timeEnd: { type: Date, default: Date.now },
 });
 
 RecordSchema.virtual("time").get(function () {

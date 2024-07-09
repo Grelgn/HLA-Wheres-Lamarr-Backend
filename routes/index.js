@@ -17,5 +17,6 @@ router.get("/levels", levelController.getAllLevels);
 // Record
 router.get("/records", recordController.getAllRecords);
 router.post("/record", recordController.startTime);
+router.patch("/record/:Id", recordController.updateRecord);
 
 module.exports = router;
