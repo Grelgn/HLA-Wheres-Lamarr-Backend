@@ -3,6 +3,7 @@ const router = express.Router();
 
 //  Require controller modules
 const levelController = require("../controllers/levelController");
+const recordController = require("../controllers/recordController");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -12,5 +13,9 @@ router.get("/", function (req, res, next) {
 // Level
 router.get("/level/:name", levelController.getLevel);
 router.get("/levels", levelController.getAllLevels);
+
+// Record
+router.get("/records", recordController.getAllRecords);
+router.post("/record", recordController.startTime);
 
 module.exports = router;
