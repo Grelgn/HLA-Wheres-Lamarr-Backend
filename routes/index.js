@@ -4,11 +4,6 @@ const router = express.Router();
 //  Require controller modules
 const recordController = require("../controllers/recordController");
 
-/* GET home page. */
-router.get("/", function (req, res, next) {
-	res.render("index", { title: "Express" });
-});
-
 // Record
 router.get("/records", recordController.getAllRecords);
 router.get("/record/:Id", recordController.getRecord);

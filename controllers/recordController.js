@@ -1,41 +1,67 @@
-const Record = require("../models/record");
+const { PrismaClient } = require("@prisma/client");
 
-exports.getAllRecords = async (req, res) => {
-	const records = await Record.find();
+const prisma = new PrismaClient();
+
+const getAllRecords = async (req, res) => {
+	const records = await prisma.record.findMany();
 	res.json(records);
 };
 
-exports.getRecord = async (req, res) => {
-	const record = await Record.findById(req.params.Id);
+const getRecord = async (req, res) => {
+	const record = await prisma.record.findFirst({
+		where: {
+			id: req.params.Id,
+		},
+	});
 	res.json(record);
 };
 
-exports.startTime = async (req, res) => {
-	const record = new Record({
-		timeStart: req.body.timeStart,
+const startTime = async (req, res) => {
+	const record = await prisma.record.create({
+		data: {
+			timeStart: req.body.timeStart,
+		},
 	});
-	await record.save();
 
 	res.json({
-		id: `${record._id}`,
+		id: `${record.id}`,
 		message: `Time started`,
 	});
 };
 
-exports.updateRecord = async (req, res) => {
+const updateRecord = async (req, res) => {
 	if (req.body.name) {
-		await Record.findByIdAndUpdate(req.params.Id, {
-			name: req.body.name,
+		await prisma.record.update({
+			data: {
+				name: req.body.name,
+			},
+			where: {
+				id: req.params.Id,
+			},
 		});
+
 		res.json({
 			message: `Added name to Record ID: ${req.params.Id}`,
 		});
 	} else {
-		await Record.findByIdAndUpdate(req.params.Id, {
-			timeEnd: Date.now(),
+		await prisma.record.update({
+			data: {
+				timeEnd: new Date().toISOString(),
+			},
+			where: {
+				id: req.params.Id,
+			},
 		});
+
 		res.json({
 			message: `Added timeEnd to Record ID: ${req.params.Id}`,
 		});
 	}
+};
+
+module.exports = {
+	getAllRecords,
+	getRecord,
+	startTime,
+	updateRecord,
 };
