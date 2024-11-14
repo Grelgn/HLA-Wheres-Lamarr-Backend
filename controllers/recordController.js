@@ -1,4 +1,5 @@
 const { PrismaClient } = require("@prisma/client");
+require("dotenv").config();
 
 const prisma = new PrismaClient();
 
@@ -59,9 +60,39 @@ const updateRecord = async (req, res) => {
 	}
 };
 
+const deleteAllRecords = async (req, res) => {
+	if (req.body.password == process.env.PASSWORD) {
+		await prisma.record.deleteMany();
+
+		res.json({
+			message: `Deleted all the Records`,
+		});
+	} else {
+		res.status(401).send("Unauthorized");
+	}
+};
+
+const deleteRecord = async (req, res) => {
+	if (req.body.password == process.env.PASSWORD) {
+		await prisma.record.delete({
+			where: {
+				id: req.params.Id,
+			},
+		});
+
+		res.json({
+			message: `Deleted the Record ID: ${req.params.Id}`,
+		});
+	} else {
+		res.status(401).send("Unauthorized");
+	}
+};
+
 module.exports = {
 	getAllRecords,
 	getRecord,
 	startTime,
 	updateRecord,
+	deleteAllRecords,
+	deleteRecord
 };
