@@ -61,7 +61,7 @@ const updateRecord = async (req, res) => {
 };
 
 const deleteAllRecords = async (req, res) => {
-	if (req.body.password == process.env.PASSWORD) {
+	if (process.env.PASSWORD && req.body.password === process.env.PASSWORD) {
 		await prisma.record.deleteMany();
 
 		res.json({
@@ -73,7 +73,7 @@ const deleteAllRecords = async (req, res) => {
 };
 
 const deleteRecord = async (req, res) => {
-	if (req.body.password == process.env.PASSWORD) {
+	if (process.env.PASSWORD && req.body.password === process.env.PASSWORD) {
 		await prisma.record.delete({
 			where: {
 				id: req.params.Id,
